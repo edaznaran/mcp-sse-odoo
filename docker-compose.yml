@@ -1,0 +1,32 @@
+volumes:
+  db_storage:
+  n8n_storage:
+  data:
+
+services:      
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=${POSTGRES_CONTAINER}
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      - N8N_PORT=5678
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=168
+      - EXECUTIONS_DATA_PRUNE_MAX_COUNT=6000
+    volumes:
+      - n8n_storage:/home/node/.n8n
+      - data:/home/node/data
+    user: "1000:1000"
+networks:
+  default:
+    name: mynetwork
+    external: true
