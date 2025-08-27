@@ -581,18 +581,19 @@ try:
     # from mcp.server.sse import SseServerTransport
 
     # # Get the SSE app from the MCP server
-    # sse_app = mcp.sse_app()
+    sse_app = mcp.sse_app()
 
-    # starlette_app = Starlette(
-    #     debug=True,
-    #     routes=[
-    #         Mount("/", app=sse_app),
-    #     ],
-    # )
+    starlette_app = Starlette(
+        debug=True,
+        routes=[
+            Mount("/", app=sse_app),
+        ],
+    )
 
     # import uvicorn
 
-    mcp.run(transport="sse")
+    # mcp.run(transport="sse")
+    
     logger.info("MCP server stopped normally")
     # return 0
 

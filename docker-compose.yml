@@ -1,5 +1,4 @@
 volumes:
-  db_storage:
   n8n_storage:
   data:
 
